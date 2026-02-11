@@ -1,0 +1,164 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Swagger Weather API",
+    "description": "This is a sample Weather API server.\nYou can find out more about Swagger at\n[http://swagger.io](http://swagger.io).\n",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@weather.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/easystepin-414/swagger.weather/1.0",
+      "description": "SwaggerHub API Auto Mocking"
+    },
+    {
+      "url": "https://api.weatherdemo.com/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "weather",
+      "description": "Everything about Weather",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "paths": {
+    "/weather/current": {
+      "get": {
+        "tags": [
+          "weather"
+        ],
+        "summary": "Get current weather by city",
+        "description": "Returns current weather details",
+        "operationId": "getCurrentWeather",
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "description": "City name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeatherResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid city name"
+          }
+        }
+      }
+    },
+    "/weather/forecast": {
+      "get": {
+        "tags": [
+          "weather"
+        ],
+        "summary": "Get 5-day weather forecast",
+        "description": "Returns forecast data",
+        "operationId": "getWeatherForecast",
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "description": "City name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForecastResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "WeatherResponse": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string"
+          },
+          "temperature": {
+            "type": "number",
+            "format": "float"
+          },
+          "humidity": {
+            "type": "integer"
+          },
+          "condition": {
+            "type": "string"
+          }
+        }
+      },
+      "ForecastResponse": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string"
+          },
+          "forecast": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DailyForecast"
+            }
+          }
+        }
+      },
+      "DailyForecast": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "minTemp": {
+            "type": "number"
+          },
+          "maxTemp": {
+            "type": "number"
+          },
+          "condition": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
